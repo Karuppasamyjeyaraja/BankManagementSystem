@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Banking Management System</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <h1>Banking Management System</h1>
+
+        <p>Manage Customers, Accounts and Transactions</p>
+
+    </header>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <nav>
+
+        <button onclick="showSection('dashboard')">
+            Dashboard
+        </button>
+
+        <button onclick="showSection('customers')">
+            Customers
+        </button>
+
+        <button onclick="showSection('accounts')">
+            Accounts
+        </button>
+
+        <button onclick="showSection('transactions')">
+            Transactions
+        </button>
+
+    </nav>
+
+
+    <main>
+
+
+        <!-- ================= DASHBOARD ================= -->
+
+        <section id="dashboard" class="section active">
+
+            <h2>Dashboard</h2>
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>Customers</h3>
+
+                    <p id="customerCount">0</p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Accounts</h3>
+
+                    <p id="accountCount">0</p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>Total Balance</h3>
+
+                    <p id="totalBalance">₹0</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= CUSTOMERS ================= -->
+
+        <section id="customers" class="section">
+
+            <h2>Customer Management</h2>
+
+
+            <div class="form-box">
+
+                <h3>Add Customer</h3>
+
+                <form id="customerForm">
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        placeholder="Name"
+                        required
+                    >
+
+                    <input
+                        type="email"
+                        id="customerEmail"
+                        placeholder="Email"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="customerPhone"
+                        placeholder="10 Digit Phone Number"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="customerAddress"
+                        placeholder="Address"
+                        required
+                    >
+
+                    <button type="submit">
+                        Add Customer
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <h3>All Customers</h3>
+
+            <button onclick="loadCustomers()">
+                Refresh Customers
+            </button>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="customerTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+
+        <!-- ================= ACCOUNTS ================= -->
+
+        <section id="accounts" class="section">
+
+            <h2>Account Management</h2>
+
+
+            <div class="form-box">
+
+                <h3>Create Account</h3>
+
+                <form id="accountForm">
+
+                    <input
+                        type="number"
+                        id="accountCustomerId"
+                        placeholder="Customer ID"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="accountNumber"
+                        placeholder="10 Digit Account Number"
+                        required
+                    >
+
+                    <select id="accountType" required>
+
+                        <option value="">
+                            Select Account Type
+                        </option>
+
+                        <option value="SAVINGS">
+                            Savings
+                        </option>
+
+                        <option value="CURRENT">
+                            Current
+                        </option>
+
+                    </select>
+
+
+                    <button type="submit">
+                        Create Account
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <h3>All Accounts</h3>
+
+            <button onclick="loadAccounts()">
+                Refresh Accounts
+            </button>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Account Number</th>
+                        <th>Type</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="accountTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+
+        <!-- ================= TRANSACTIONS ================= -->
+
+        <section id="transactions" class="section">
+
+            <h2>Bank Transactions</h2>
+
+
+            <!-- Deposit -->
+
+            <div class="transaction-box">
+
+                <h3>Deposit Money</h3>
+
+                <input
+                    type="number"
+                    id="depositAccountId"
+                    placeholder="Account ID"
+                >
+
+                <input
+                    type="number"
+                    id="depositAmount"
+                    placeholder="Amount"
+                >
+
+                <button onclick="depositMoney()">
+                    Deposit
+                </button>
+
+            </div>
+
+
+            <!-- Withdrawal -->
+
+            <div class="transaction-box">
+
+                <h3>Withdraw Money</h3>
+
+                <input
+                    type="number"
+                    id="withdrawAccountId"
+                    placeholder="Account ID"
+                >
+
+                <input
+                    type="number"
+                    id="withdrawAmount"
+                    placeholder="Amount"
+                >
+
+                <button onclick="withdrawMoney()">
+                    Withdraw
+                </button>
+
+            </div>
+
+
+            <!-- Transfer -->
+
+            <div class="transaction-box">
+
+                <h3>Transfer Money</h3>
+
+                <input
+                    type="number"
+                    id="fromAccountId"
+                    placeholder="From Account ID"
+                >
+
+                <input
+                    type="number"
+                    id="toAccountId"
+                    placeholder="To Account ID"
+                >
+
+                <input
+                    type="number"
+                    id="transferAmount"
+                    placeholder="Amount"
+                >
+
+                <button onclick="transferMoney()">
+                    Transfer
+                </button>
+
+            </div>
+
+
+            <!-- Balance -->
+
+            <div class="transaction-box">
+
+                <h3>Balance Inquiry</h3>
+
+                <input
+                    type="number"
+                    id="balanceAccountId"
+                    placeholder="Account ID"
+                >
+
+                <button onclick="checkBalance()">
+                    Check Balance
+                </button>
+
+                <p id="balanceResult"></p>
+
+            </div>
+
+
+            <!-- Transaction History -->
+
+            <div class="transaction-box">
+
+                <h3>Transaction History</h3>
+
+                <input
+                    type="number"
+                    id="historyAccountId"
+                    placeholder="Account ID"
+                >
+
+                <button onclick="loadTransactions()">
+                    View History
+                </button>
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>From Account</th>
+                            <th>To Account</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="transactionTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="./script.js"></script>
+
+</body>
+
+</html>
